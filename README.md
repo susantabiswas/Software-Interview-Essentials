@@ -1,5 +1,7 @@
-# Algorithms, System Design and more
+# Curated set of interview preparation material across topics
+A repo to track my solution code for the `DSA`, `SQL`, `concurrency`, `LLD` problems from platforms like Leetcode etc. Fully documented and commented code, explaining the logic and flow that can be used for interview preparation for cracking any FAANG level company.
 
-My code solutions for algorithemic problems on Leetcode, HackerEarth etc. Fully documented and commented code, explaining the logic and flow. 
+For a curated list of problems, check the **releases** section of this repo.
 
-You will mainly find Leetcode solutions, SQL problems, Design Patterns etc.
+
+
