@@ -60,4 +60,27 @@ public:
         }
         return result;
     }
+
+/////////////////////// Solution 2
+vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, long> freq;
+        for(int num: nums)
+            ++freq[num];
+
+        vector<int> result;
+        priority_queue<pair<long, int>, vector<pair<long, int>>, greater<pair<long, int>> > min_heap;
+
+        for(auto [num, cnt]: freq) {
+            min_heap.push(make_pair(cnt, num));
+            
+            if (min_heap.size() > k)
+                min_heap.pop();
+        }
+
+        while(!min_heap.empty()) {
+            result.push_back(min_heap.top().second);
+            min_heap.pop();
+        }
+        return result;
+    }
 };
