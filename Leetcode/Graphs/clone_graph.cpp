@@ -36,6 +36,27 @@ public:
 
 class Solution {
 public:
+    // Sol 0: DFS (Preferred, safer handling of node without explicit checks)
+    // TC: O(N)
+    // SC: O(N)
+    Node* dfs(Node* node, unordered_map<Node*, Node*>& clones) {
+        if (node == nullptr)
+            return nullptr;
+
+        // already visited
+        if (clones.count(node))
+            return clones[node];
+
+        // create the node 
+        clones[node] = new Node(node->val);
+
+        // visit all the neighbors
+        for(auto neighbor: node->neighbors) {
+            clones[node]->neighbors.push_back(dfs(neighbor, clones));
+        }
+        return clones[node];
+    }
+
     // Sol 1: DFS
     // TC: O(N)
     // SC: O(N)
