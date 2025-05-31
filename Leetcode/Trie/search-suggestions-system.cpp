@@ -30,7 +30,11 @@ public:
             vector<string> suggestion;
             // check if the current prefix is present, also check the next 2 words if present
             for(int i = 0; i < 3 && it + i < products.end(); i++) {
-                if((*(it + i)).find(prefix) != string::npos)
+                size_t pos = (*(it + i)).find(prefix);
+
+                // the word can only be considered having a prefix match if the prefix
+                // was found starting at position 0
+                if(pos == 0)
                     suggestion.emplace_back(*(it + i));
                 else
                     break;
