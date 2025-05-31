@@ -91,6 +91,94 @@ public:
     }
 };
 
+////////////////////////////////////////////// Cleaner code
+class Solution {
+public:
+    struct TrieNode {
+        unordered_map<char, TrieNode*> leaves;
+        bool is_string = false;
+    };
+
+    class Trie {
+    public:
+        TrieNode* root = nullptr;
+
+        Trie(): root(new TrieNode()) {}
+
+        bool addWord(string word) {
+            TrieNode* curr = root;
+
+            for(char& ch: word) {
+                if (curr->leaves.count(ch) == 0)
+                    curr->leaves[ch] = new TrieNode();
+                curr = curr->leaves[ch];
+            }
+
+            return curr->is_string ? false : (curr->is_string = true);
+        }
+
+        TrieNode* getRoot() {
+            return root;
+        }
+    };
+
+    void dfs(int r, int c, TrieNode* root, string prefix, vector<vector<char>>& grid, 
+        vector<vector<bool>>& visited, vector<string>& result) {
+        // base cases
+        // out of bound or already visited
+        if (r < 0 || r >= grid.size() || c < 0 || c >= grid[0].size() || visited[r][c])
+            return;
+
+        // cant travese further as the current char doesnt exist in trie
+        if (root->leaves.count(grid[r][c]) == 0)
+            return;
+        
+        // current char exists in trie
+        root = root->leaves[grid[r][c]];
+        prefix = prefix + grid[r][c];
+
+        // prefix exists as word
+        if (root->is_string) {
+            result.push_back(prefix);
+            // It is possible that the same word is matched in different
+            // traversals of DFS, so instead of using a set to keep the 
+            // unique set of words, we can prevent adding the same word next time
+            // by just removing that as a word in Trie
+            root->is_string = false;
+        }
+
+        // mark as visited
+        visited[r][c] = true;
+
+        dfs(r + 1, c, root, prefix, grid, visited, result);
+        dfs(r - 1, c, root, prefix, grid, visited, result);
+        dfs(r, c + 1, root, prefix, grid, visited, result);
+        dfs(r, c - 1, root, prefix, grid, visited, result);
+
+        // revert visited
+        visited[r][c] = false;
+    }
+
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        // add all the words to Trie
+        Trie trie;
+        for(string& word: words)
+            trie.addWord(word);
+
+        int n_rows = board.size(), n_cols = board[0].size();
+        vector<vector<bool>> visited(n_rows, vector<bool>(n_cols, false));
+        vector<string> result;
+
+        for(int r = 0; r < n_rows; r++)
+            for(int c = 0; c < n_cols; c++) {
+                dfs(r, c, trie.getRoot(), "", board, visited, result);
+            }
+
+        return result;
+    }
+};
+
+
 ///////////////////////////////////////
 class Solution {
 public:
