@@ -36,23 +36,40 @@
     
     Subtree
         9
-      /  \
-     0    1
+        \
+         1
           \
-           2
+           2   => L, 9, L, 1, 2, L, L
 
     Main Tree
-        100
-       / \ 
+
       9
     /  \
    0    1
     \    \
-     8    2
+     8    2   => L, 0, L, 8, L, 9, L, 1, 2, L, L
 
-    Here the main tree doesnt really have the subtree, but without capturing the end of recursion, the null node after 8 will appear just before 9 and 
+    Here the main tree doesnt really have the subtree, but without capturing the end of recursion, the null child node of 8 will appear just before 9 and 
     the string search wll turn true.
-    With capturing the recursion call end, we will have null,*,9.... => this will not match the string as expected
+
+    Basically since in inorder we rely on : left + curr + right
+    If the rightmost subtree of left child has the same structure as that of left subtree of target tree, then the representations will match
+    since in inorder we are putting the right subtree of last child in the left subtree. Eg L, 0, L, 8, | L, 9, L, 1, 2, L, L |, right subtree of 8 was L and that appeared
+    just before 9 in the serialization and hence a false match.
+    What we need is a way to clearly mark the start of end of subtree processing (you can even think of it like the direction in which we moved)
+    When we add the marking of a subtree processing, then there is no ambiguity and the subtrees are clear.
+    With directional / subtree marking
+    Main: L, 0, L, 8, L, *, *, 9, L, 1, 2, L, L, *, *, *
+    subtree: L, 9, L, 1, 2, L, L, *, *, *
+
+    Now that we have captured the directional info, we can see that after 8, L, we also have captured *, *, which indicate end of recursion for those 2 subtrees and then coming to node 9 again.
+
+    Why is this not required for preorder and postorder?
+
+    Preorder or postorder already clearly marks the processing of a subtree and hence the directional info is already inherently present.
+    Preorder: curr + left + right => curr will always tell you the subtree being processed
+    Postorder: left + right + curr => again, the curr at the end indicates the subtree being processed.
+    
 */
 
 /**
