@@ -32,3 +32,32 @@ public:
         return cmb;
     }
 };
+
+
+////////////////////////////////////////////////////// Style 2
+class Solution {
+public:
+    void cmb(int curr, int& n, int& k, vector<int>& partial, vector<vector<int>>& result) {
+        if (partial.size() == k) {
+            result.push_back(partial);
+            return;
+        }
+
+        if (curr > n)
+            return;
+
+        // skip the current
+        cmb(curr+1, n, k, partial, result);
+        partial.push_back(curr);
+        cmb(curr+1, n, k, partial, result);
+        partial.pop_back();
+    }
+
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> result;
+        vector<int> partial;
+        cmb(1, n, k, partial, result);
+
+        return result;
+    }
+};
