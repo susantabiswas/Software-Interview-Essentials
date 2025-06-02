@@ -36,7 +36,7 @@
         NOTE: Even if the input array was sorted, due to the swapping the sorted order is not maintained.
                 This is the biggest diff to note while dealing with duplicates.
                 
-        nums[1:N-1] will again repeat the process and will do pmt of nums[1:N-1] after this recursive call.
+        nums[i:N-1] will again repeat the process and will do pmt of nums[i:N-1] after this recursive call.
         Here swapping twice reverts the changes made between curr and ith position and this is okay since we 
         just want to put each number once at the current position, nothing else.
         
@@ -89,8 +89,8 @@
         against much bigger numbers and not immediate numbers, which after swapping makes the array unsorted.
         1,2,3
         curr = 0
-        1,2,3, i = 1 => [2,3]
-        2,1,3, i = 1 => [1,3], 1 comapred with 2 is find since they are immediate and swapping will retain the sorted order
+        1,2,3, i = 0 => [2,3]
+        2,1,3, i = 1 => [1,3], 1 compared with 2 is fine since they are immediate and swapping will retain the sorted order
         3,2,1, i = 2 => [2,1], 1 compared with 3 and swapped
         
         This implies that 2nd swap is not needed.
