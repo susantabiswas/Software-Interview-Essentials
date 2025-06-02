@@ -64,6 +64,22 @@
         
         
     Permutations II problem:
+
+        -------------------- TLDR; ------------------------------
+        1. We need the elements sorted in order to skip duplicates
+        2. To ensure that the elements are still sorted, we only swap once. Upon each
+            swap the smaller elements is put at the larger element's spot and will make the array after it unsorted.
+            When we swap only once, then we put the larger element at curr position and then later on also we just compare
+            with this larger element with the next larger in the remaining array (traversal using ith index).
+        3. We compare with `nums[curr] != nums[i]` instead of `nums[i] != nums[i-1]`, this is because whenever a swap happens,
+            for the i=1th element, i-1th element is not equal and in the next iteration, again the duplicate will be swapped.
+            Eg: 1,2,2,3
+            curr = 0
+            i = 1 => 2,1,2,3
+            i = 2 => 2,1,2,3 [Here i=2 will compare with i=1 which is 1 and num[2] != nums[1] will be true and again 2(idx=2) swapped with 2 (idx=0)]
+            But when we use the comaprison with the last swapped element which is nums[curr], we can be sure if the ith elements is duplicate or not.
+
+        ------------------------------
     
         Now at a glance this problem looks like a combination of above two problems and hence combining there logic
         should work. But it doesn't work.
