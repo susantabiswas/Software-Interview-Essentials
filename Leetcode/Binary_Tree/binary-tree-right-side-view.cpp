@@ -54,7 +54,7 @@ public:
     }
 };
 
-////////////////////////// SOLUTION 2
+////////////////////////// SOLUTION 2.A
 class Solution {
 public:
     void preorder(TreeNode* root, int curr_depth, int& max_depth, vector<int>& view) {
@@ -76,5 +76,30 @@ public:
         
         preorder(root, 1, max_depth, view);
         return view;
+    }
+};
+
+////////////////////////// SOLUTION 2.B
+class Solution {
+public:
+    void dfs(TreeNode* root, int& max_level, int level, vector<int>& right) {
+        if (!root)
+            return;
+
+        if (max_level < level) {
+            right.push_back(root->val);
+            max_level = level;
+        }
+
+        dfs(root->right, max_level, level+1, right);
+        dfs(root->left, max_level, level+1, right);
+    }
+
+    vector<int> rightSideView(TreeNode* root) {
+        int max_level = 0;
+        vector<int> right;
+        dfs(root, max_level, 1, right);
+
+        return right;
     }
 };
