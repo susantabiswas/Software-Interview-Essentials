@@ -12,7 +12,8 @@
     So 2 * 2 * .. 2 choices (n times)
     With 2 choices and length n, we have 2^n possible partitioned strings.
     
-    Also when we create a substring, that substring is actually a part of one of the possible 2^N partitioned strings. So the in total an effort of O(n) will be spent for that full-length partitioned string and hence it takes O(n) for each possible palindromic partition.
+    Also, when we create a substring, that substring is actually a part of one of the possible 2^N partitioned strings. 
+    So, in total, an effort of O(n) will be spent on that full-length partitioned string, and hence it takes O(n) for each possible palindromic partition.
     For a total of 2^n strings, we have
     TC: ~O(n * 2^n)
     SC: O(n), recursion depth
@@ -42,7 +43,7 @@ public:
         const int N = s.size();
         vector<vector<string> > result;
         vector<string> partial;
-        // find all the palindromic substrings and save the the findings
+        // find all the palindromic substrings and save the findings
         vector<vector<bool> > dp(N, vector<bool>(N, false));
         
         // all single chars are palindromic
@@ -60,7 +61,7 @@ public:
             }
         }
         
-        // find all the partitions using backtracking
+        // Find all the partitions using backtracking
         partitionPalindrome(s, 0, dp, result, partial);
         return result;
     }
