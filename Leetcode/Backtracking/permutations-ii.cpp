@@ -160,7 +160,7 @@ public:
             // Notice how all the elements after curr=0 are still sorted and since they are sorted
             // (i == curr || nums[curr] != nums[i]) will work. As this check can only work when the duplicates are
             // put together. In an unsorted order, it won't work.
-            if(i == curr || nums[i-1] != nums[i]) {
+            if(i == curr || nums[curr] != nums[i]) {
                 swap(nums[curr], nums[i]);
                 findPmt(curr + 1, nums, result);
             }
