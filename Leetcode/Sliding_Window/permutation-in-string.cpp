@@ -1,4 +1,3 @@
-```
 /*
     https://leetcode.com/problems/permutation-in-string/
     
@@ -36,4 +35,56 @@ public:
         return false;
     }
 };
-```
+
+
+////////////////////////////// Style 3
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        int n = s2.size(), k = s1.size();
+
+        // if smaller string is greater than the bigger string, not possible
+        if (s1.size() > s2.size())
+            return false;
+        // if the substring is empty, it is possible
+        if (s1.empty())
+            return true;
+
+        unordered_map<char, int> freq;
+
+        // find the substring's freq
+        for(char& ch: s1)
+            ++freq[ch];
+
+        // process the 1st window
+        int req = k;
+        int i = 0;
+
+        while(i < k) {
+            // req chars is only affected as long as we are not seeing surplus
+            if (--freq[s2[i]] >= 0)
+                --req;
+            ++i;
+        }
+
+        if (req == 0)
+            return true;
+
+        // process the remaining windows
+        for(; i < n; i++) {
+            // remove the oldest char of last window
+            if (++freq[s2[i - k]] > 0)
+                ++req;
+
+            // add the last char of current window
+            if (--freq[s2[i]] >= 0)
+                --req;
+
+            if (req == 0)
+                return true;
+        }
+
+        return false;
+    }
+};
+
